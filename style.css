@@ -1,0 +1,25 @@
+
+ .searchCityJumbo {
+    
+ }
+
+ #carousel {
+    width: 720px;
+    height: 400px;
+    overflow: hidden;
+ }
+
+ #carousel .slides {
+     display: block;
+     width: 10080px;
+     height: 400px;
+     margin: 0;
+     padding: 0;
+ }
+
+ #carousel .slide {
+     float:left;
+     list-style-type: none;
+     width: 720px;
+     height: 400px;
+ }
