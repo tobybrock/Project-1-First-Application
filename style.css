@@ -1,14 +1,23 @@
 
  .searchCityJumbo {
-    
+   display : block; 
  }
+
 
  #carousel {
     width: 720px;
     height: 400px;
     overflow: hidden;
+    display: none;
+ }
+ #carouselBtnLeft  {
+     display: none;
  }
 
+ #carouselBtnRight {
+     display: none;
+ }
+ 
  #carousel .slides {
      display: block;
      width: 10080px;
@@ -22,4 +31,10 @@
      list-style-type: none;
      width: 720px;
      height: 400px;
+ }
+
+ .slideImage {
+    list-style-type: none;
+    width: 720px;
+    height: 400px;
  }
