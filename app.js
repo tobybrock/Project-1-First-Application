@@ -5,7 +5,7 @@ async function getWeather(city){
     .catch(e => console.log(e));
     //append data to carousel
     fortnightForecast(response.data);
-    console.log(response.data[0]);
+   
     
  }
 
@@ -17,9 +17,10 @@ async function getWeather(city){
      const response = await $.ajax(`https://pixabay.com/api/?key=16762787-98934c07282a01a02ff313326&q=${condition}&image_type=photo`)
      .catch(e => console.log(e));
      //console.log(response.hits[0].webformatURL);
-     return(response.hits[0].webformatURL);
-     
+     let random = Math.floor(Math.random() * Math.floor(5));
+     return(response.hits[random].webformatURL);
  }
+
 //On Ready Function
 $(() => {
 $("#cityBtn").on('click', (e) => {
@@ -29,23 +30,46 @@ $("#cityBtn").on('click', (e) => {
     getWeather(city);
     
 });
+settingsMenu();
 hideJumbo();    
 showCarousel();
 });
 
+function settingsMenu() {
+    //toggles a class when li is clicked to apply and remove styling
+    $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
+        $(this).closest("li").toggleClass("active", this.checked);
+     });
+
+     //allows settings to stay open on internal click events
+     $(document).on('click', '.allow-focus', function (e) {
+        e.stopPropagation();
+      });
+}
 //This function appends API data gathered from the weather and image APIs to an unordered list inside a carousel
 function fortnightForecast(data) {
     const weatherData = $(".slides");
+    const settingsCheck = [
+        "snow",
+        "wind_spd",
+        "clouds",
+        "vis",
+        "rh"
+    ]
     for(let i =0; i < 14; i++){
-        weatherData.append(`<li class="slide">${data[i].datetime} ${data[i].temp} ${data[i].weather.description}</li>`);
-        console.log(data[i].weather.description);
+        weatherData.append(`<li class="headerSlide">${getDayName(data[i].datetime, undefined)}</li>`);
+        //runs through settings checked boxes and appends data to the carousel
+        for(let ii = 0; ii < settingsCheck.length; ii++){
+            if($(`#check${ii}`).prop("checked") == true){
+                weatherData.append(`<li class="slide" id="slide${i}">${data[i].settingsCheck[ii]}<br></li>`);
+        }
+    }
+        weatherData.append(`<li class="slide" id="slide${i}">${data[i].datetime}<br>${data[i].temp}<br>${data[i].weather.description}</li>`);
         //Use weather description as the condition in GetPicture
         let weatherDescription = (data[i].weather.description);
         let replaced = weatherDescription.split(' ').join('+');
         getPicture(replaced).then((pictureUrl) => {
-        console.log(pictureUrl);
-        console.log($(".slide").children);
-       $(".slide").append(`<li class="slideImage"><img src=${pictureUrl}></li>`);
+       $(`#slide${i}`).css(`background-image`, `url(${pictureUrl})`);
         });
         
     }
@@ -81,6 +105,12 @@ function carousel() {
     }
     }));
 
+}
+//Get day from date
+function getDayName(dateStr, locale)
+{
+    var date = new Date(dateStr);
+    return date.toLocaleDateString(locale, { weekday: 'long' });        
 }
 
 //hide Jumbotron after search is clicked **will need styling
