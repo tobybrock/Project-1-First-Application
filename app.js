@@ -5,20 +5,15 @@ async function getWeather(city){
     .catch(e => console.log(e));
     //append data to carousel
     fortnightForecast(response.data);
-   
-    
  }
-
-
-
+ 
  //GET Image API
  //the condition variable is a weather description from the getWeather API
  async function getPicture(condition){
-     const response = await $.ajax(`https://pixabay.com/api/?key=16762787-98934c07282a01a02ff313326&q=${condition}&image_type=photo`)
+     const response = await $.ajax(`https://api.unsplash.com/search/photos?page=1&query=${condition}&client_id=Qll_xnk7d3ktu5Ek9TgLO_6A8nm3ucuWCCIUVjFaq3E`)
      .catch(e => console.log(e));
-     //console.log(response.hits[0].webformatURL);
-     let random = Math.floor(Math.random() * Math.floor(5));
-     return(response.hits[random].webformatURL);
+     let random = Math.floor(Math.random() * Math.floor(10)); //get one of 10 random images
+     return( response.results[random].urls.regular);
  }
 
 //On Ready Function
@@ -57,14 +52,16 @@ function fortnightForecast(data) {
         "rh"
     ]
     for(let i =0; i < 14; i++){
-        weatherData.append(`<li class="headerSlide">${getDayName(data[i].datetime, undefined)}</li>`);
         //runs through settings checked boxes and appends data to the carousel
         for(let ii = 0; ii < settingsCheck.length; ii++){
             if($(`#check${ii}`).prop("checked") == true){
-                weatherData.append(`<li class="slide" id="slide${i}">${data[i].settingsCheck[ii]}<br></li>`);
+                weatherData.append(`<li class="slide" id="slide${i}"><h1>${data[i].settingsCheck[ii]}<br></h1></li>`);
         }
     }
-        weatherData.append(`<li class="slide" id="slide${i}">${data[i].datetime}<br>${data[i].temp}<br>${data[i].weather.description}</li>`);
+        weatherData.append(`<li class="slide" id="slide${i}">${data[i].datetime}&emsp;${getDayName(data[i].datetime, undefined)}<br>
+        ${data[i].temp}°C<br>
+        ${data[i].weather.description}</li>`);
+
         //Use weather description as the condition in GetPicture
         let weatherDescription = (data[i].weather.description);
         let replaced = weatherDescription.split(' ').join('+');
@@ -74,6 +71,7 @@ function fortnightForecast(data) {
         
     }
 }
+
 //Create a carousel
 function carousel() {
     const width = 720;
@@ -126,12 +124,13 @@ function hideJumbo(){
 //show the carousel after search is clicked **will need styling
 function showCarousel() {
     $("#cityBtn").on('click', (() => {
-        let carousel = $('#carousel');
+        let carousel = $("#carousel");
         let btnLeft = $("#carouselBtnLeft");
         let btnRight = $("#carouselBtnRight");
+        let carouselJumbo = $(".carouselJumbo");
         carousel.show();
         btnLeft.show();
         btnRight.show();
-        
+        carouselJumbo.css("display", "flex");
     }));
 }
