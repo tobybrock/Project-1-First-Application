@@ -9,6 +9,8 @@ async function getWeather(city){
     
  }
 
+
+
  //GET Image API
  //the condition variable is a weather description from the getWeather API
  async function getPicture(condition){
@@ -38,12 +40,14 @@ function fortnightForecast(data) {
         weatherData.append(`<li class="slide">${data[i].datetime} ${data[i].temp} ${data[i].weather.description}</li>`);
         console.log(data[i].weather.description);
         //Use weather description as the condition in GetPicture
-        /*let weatherDescription = (data[i].weather.description);
+        let weatherDescription = (data[i].weather.description);
         let replaced = weatherDescription.split(' ').join('+');
-        let pictureUrl = getPicture(replaced);
-        console.log(getPicture(replaced));
-        weatherData.append(`<li class="slideImage"><img src=${pictureUrl}></li>`);
-        */
+        getPicture(replaced).then((pictureUrl) => {
+        console.log(pictureUrl);
+        console.log($(".slide").children);
+       $(".slide").append(`<li class="slideImage"><img src=${pictureUrl}></li>`);
+        });
+        
     }
 }
 //Create a carousel
@@ -53,28 +57,32 @@ function carousel() {
     let currentSlide = 1;
     const carousel = $("#carousel");
     const slideContainer =carousel.find(".slides");
-    const slides = $('.slide');
+    
     
     //animate on click to move the carousel right
+
    $(carouselBtnRight).on('click', (() =>{
+       if(currentSlide < 14){
         slideContainer.animate({"margin-left": "-=" + width}, animationSpeed, (() => {
             currentSlide ++;
             console.log(currentSlide);
         }));
+    }
     }));
    
-     //animate on click to move the carousel left
+     //animate on click to move the carousel 
+     
     $(carouselBtnLeft).on('click', (() =>{
+        if(currentSlide > 1){
         slideContainer.animate({"margin-left": "+=" + width}, animationSpeed, (() => {
             currentSlide --;
             console.log(currentSlide);
-            if(currentSlide === 1){
-                currentSlide =1;
-            }
         }));
+    }
     }));
 
 }
+
 //hide Jumbotron after search is clicked **will need styling
 function hideJumbo(){
     $("#cityBtn").on('click', (() => {
