@@ -20,11 +20,11 @@ async function getWeather(city){
 $(() => {
 $("#cityBtn").on('click', (e) => {
     let city = $("#cityInput").val();
-    
+    $("#header").append(`<h1>Fortnightly forcast for ${$("#cityInput").val()}</h1>`);
     carousel();
     getWeather(city);
-    
 });
+
 settingsMenu();
 hideJumbo();    
 showCarousel();
@@ -43,25 +43,29 @@ function settingsMenu() {
 }
 //This function appends API data gathered from the weather and image APIs to an unordered list inside a carousel
 function fortnightForecast(data) {
+    console.log(data);
     const weatherData = $(".slides");
     const settingsCheck = [
-        "snow",
-        "wind_spd",
-        "clouds",
-        "vis",
-        "rh"
+        {condition:"snow", measure:"mm", name:"Total Snowfall:"},
+        {condition:"wind_spd", measure:"m/s", name:"Wind Speed:"},
+        {condition:"clouds", measure:"%", name:"Colud Coverage:"},
+        {condition:"vis", measure:"km", name:"Visibility:"},
+        {condition:"rh", measure:"%", name:"Humidity:"}
     ]
     for(let i =0; i < 14; i++){
+        console.log( "data", data[i]);
         //runs through settings checked boxes and appends data to the carousel
-        for(let ii = 0; ii < settingsCheck.length; ii++){
-            if($(`#check${ii}`).prop("checked") == true){
-                weatherData.append(`<li class="slide" id="slide${i}"><h1>${data[i].settingsCheck[ii]}<br></h1></li>`);
+      
+        weatherData.append(`<li class="slide" id="slide${i}">Date: ${data[i].datetime}&emsp;${getDayName(data[i].datetime, undefined)}<br>
+        Average temperature: ${data[i].temp}°C<br>
+        Weather condition: ${data[i].weather.description}<br></li>`);
+
+        for(let j = 0; j < settingsCheck.length; j++){
+            if($(`#check${j}`).prop("checked")){
+                console.log(data[i][settingsCheck[j].condition]);
+                $(`#slide${i}`).append(`${settingsCheck[j].name} ${data[i][settingsCheck[j].condition]}${settingsCheck[j].measure}<br>`);
         }
     }
-        weatherData.append(`<li class="slide" id="slide${i}">${data[i].datetime}&emsp;${getDayName(data[i].datetime, undefined)}<br>
-        ${data[i].temp}°C<br>
-        ${data[i].weather.description}</li>`);
-
         //Use weather description as the condition in GetPicture
         let weatherDescription = (data[i].weather.description);
         let replaced = weatherDescription.split(' ').join('+');
@@ -79,7 +83,6 @@ function carousel() {
     let currentSlide = 1;
     const carousel = $("#carousel");
     const slideContainer =carousel.find(".slides");
-    
     
     //animate on click to move the carousel right
 

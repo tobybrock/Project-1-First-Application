@@ -1,14 +1,24 @@
 body {
-    background: url(images/background.jpg);
-    background-position: center; 
+    display: flex;
+     align-items: center;
+     height: 100vh;
+     background: url(images/background.jpg);
+     background-position: center; 
      background-repeat: no-repeat;
      background-size:stretch;
+     
  }
+ 
 
 
  .searchCityJumbo {
    display : block; 
    background: rgb(125, 249, 255); /* for ie8 and below */
+   text-align: center;
+ }
+ 
+ #header {
+     text-align: center;
  }
 
 .carouselJumbo{
