@@ -2,28 +2,26 @@ body {
     display: flex;
      align-items: center;
      height: 100vh;
-     background: url(images/background.jpg);
      background-position: center; 
-     background-repeat: no-repeat;
-     background-size:stretch;
+     background-size: cover;
+    background-repeat: no-repeat;
      
  }
- 
-
 
  .searchCityJumbo {
    display : block; 
-   background: rgb(125, 249, 255); /* for ie8 and below */
+   background: rgb(125, 249, 255, 0.6); /* for ie8 and below */
    text-align: center;
  }
- 
+
  #header {
      text-align: center;
  }
-
+.quizJumbo {
+    display:none;
+}
 .carouselJumbo{
     display: none;
-    background: rgb(125, 249, 255); /* for ie8 and below */ 
     justify-content: center;
 }
 
@@ -32,6 +30,7 @@ body {
     height: 400px;
     overflow: hidden;
     display: none;
+    
  }
  #carouselBtnLeft  {
      display: none;
@@ -47,6 +46,7 @@ body {
      height: 400px;
      margin: 0;
      padding: 0;
+     
  }
  .headerSlide { 
     list-style-type: none;
@@ -62,6 +62,11 @@ body {
      background-position: center; 
      background-repeat: no-repeat; 
      background-size: cover;
+     animation-timing-function: cubic-bezier(0.25,0.1,0.25,1);
+ }
+
+ .weatherIcon {
+     max-height: 50px;
  }
 
  .checkbox-menu li label {
