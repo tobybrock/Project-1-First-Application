@@ -6,6 +6,7 @@
   <title></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="style.css">
@@ -59,20 +60,29 @@
       
     <div id="header"></div>
     <div class="carouselJumbo">
-      <button type="button" class="btn btn-dark" id="carouselBtnLeft">Carousel Left</button>
+      <button type="button" class="btn btn-outline-light" id="carouselBtnLeft"><svg class="bi bi-arrow-left-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.646 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L6.207 7.5H11a.5.5 0 0 1 0 1H6.207l2.147 2.146z"/>
+      </svg></button>
 
       <div id="carousel">
         <ul class="slides">
         </ul>
       </div>
-      <button type="button" class="btn btn-dark" id="carouselBtnRight">Carousel Right</button>
+      <button type="button" class="btn btn-outline-light" id="carouselBtnRight"><svg class="bi bi-arrow-right-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-8.354 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L9.793 7.5H5a.5.5 0 0 0 0 1h4.793l-2.147 2.146z"/>
+      </svg></button>
     </div>
 
     <div class="quizJumbo">
       <footer class="colderCapitalCity">
+        
+
         <h1>Which city is colder?</h1>
-        <button type="button" class="btn btn-dark" id="leftBtn"></button>
-        <button type="button" class="btn btn-dark" id="rightBtn"></button>
+        <button type="button" class="btn btn-dark quizBtn" id="leftBtn"></button>
+        <button type="button" class="btn btn-dark quizBtn" id="rightBtn"></button>
+        <h2>WinStreak</h2>
+        <div id="winstreak"></div>
+        <button type="button" class="btn btn-dark" id="nextRoundBtn">next round</button>
       </footer>
     </div>
     </div>
