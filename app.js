@@ -23,12 +23,13 @@ async function backgroundPicture(City) {
 }
 async function getRandomCityTemp(){
     let capitals ="Port-au-Prince,Tegucigalpa,Budapest,Reykjavik,New Delhi,Jakarta,TehranBaghdad,Dublin,Jerusalem,Rome,Kingston,Tokyo,Amman,Astana,Nairobi,Tarawa Atoll,Pyongyang,Seoul,Pristina,KuwaitCity,Bishkek,Vientiane,Riga,Maseru,Monrovia,Tripoli,Vaduz,Vilnius,Luxembourg,Skopje,Antananarivo,Lilongwe,KualaLumpur,Male,Bamako,Valletta,Majuro,Nouakchott,PortLouis,MexicoCity,Palikir,Chisinau,Monaco,Ulaanbaatar,Podgorica,Rabat,Maputo,Naypyidaw,Windhoek,YarenDistrict,Kathmandu,Amsterdam,Wellington,Managua,Niamey,Abuja,Oslo,Muscat,Islamabad,Melekeok,PanamaCity,PortMoresby,Asuncion,Lima,Manila,Warsaw,Lisbon,Doha,Bucharest,Moscow,Kigali,Basseterre,Castries,Kingstown,Apia,SanMarino,SaoTome,Riyadh,Dakar,Belgrade,Victoria,Freetown,Singapore,Bratislava,Ljubljana,Honiara,Mogadishu,Pretoria,CapeTown,Bloemfontein,Juba,Madrid,Khartoum,Paramaribo,Mbabane,Stockholm,Bern,Damascus,Taipei,Dushanbe,Dodoma,Bangkok,Lome,Nuku’alofa,Tunis,Ankara,Ashgabat,Funafuti,Kampala,Kyiv,AbuDhabi,London,Washington,Montevideo,Tashkent,Port-Vila,VaticanCity,Caracas,Hanoi,Sanaa,Lusaka,Harare";
+    //Convert string to array list
     const capitalArray = capitals.split(",");
     let random = Math.floor(Math.random() * Math.floor(capitalArray.length));
+    //choose random Capital
     let capital = capitalArray[random];
     const response = await $.ajax(`https://api.weatherbit.io/v2.0/forecast/daily?city=${capital}&key=3f83b809a68640b8957ad8619c559f88`)
     .catch(e => console.log(e));
-    console.log("test", response.data[0].temp);
     let temp = response.data[0].temp;
     return[capital, temp];
 }
@@ -50,8 +51,9 @@ $(() => {
         $("#cityInput").keypress(function (e) {
         if (e.which == 13) {
             let city = $("#cityInput").val();
+            let background = await backgroundPicture(city);
             if(typeof(city) !== undefined){
-            $("body").css("background-image", 'url("' + backgroundPicture(city) + '")');
+            $("body").css("background-image", 'url("' + background + '")');
             $(".slides").empty();
             $("#header").empty();
             $("#header").append(`<h1>Fortnightly forcast for ${$("#cityInput").val()}</h1>`);
@@ -160,14 +162,15 @@ function showCarousel() {
         quizJumbo.show();
 }
 
+    //Which is Colder Guessing Game
     async function colderCapital() {
-        let values = await getRandomCityTemp();
-        let cap1 = values[0];
-        let temp1 = values[1];
-        let values2 = await getRandomCityTemp();
-        let cap2 = values2[0];
-        let temp2 = values2[1];
-        let winstreak = $("#winstreak");
+    let values = await getRandomCityTemp();
+    let cap1 = values[0];
+    let temp1 = values[1];
+    let values2 = await getRandomCityTemp();
+    let cap2 = values2[0];
+    let temp2 = values2[1];
+    let winstreak = $("#winstreak");
     const colder = $(".colderCapitalCity");
     let counter = 0;
     winstreak.append(counter);
@@ -176,6 +179,7 @@ function showCarousel() {
     let rightBtn = $("#rightBtn");
     leftBtn.text(cap1);
     rightBtn.text(cap2);
+    //Get new data for the buttons
    $("#nextRoundBtn").on('click', async function(){
     values = await getRandomCityTemp();
     cap1 = values[0];
@@ -186,6 +190,7 @@ function showCarousel() {
     winstreak = $("#winstreak");
     leftBtn.text(cap1);
     rightBtn.text(cap2);
+    //enable the buttons
     quizBtn.removeClass("disabled");
    });
     if(temp1 > temp2){

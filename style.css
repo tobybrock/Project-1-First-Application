@@ -25,7 +25,8 @@ body {
 }
 .carouselJumbo{
     display: none;
-    justify-content: center;
+    
+    justify-content: start;
     position: relative; 
 }
 
