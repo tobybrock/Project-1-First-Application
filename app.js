@@ -48,7 +48,7 @@ $(() => {
         getWeather(city);
         }
     });
-        $("#cityInput").keypress(function (e) {
+        $("#cityInput").keypress(async(e) => {
         if (e.which == 13) {
             let city = $("#cityInput").val();
             let background = await backgroundPicture(city);

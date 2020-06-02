@@ -26,7 +26,7 @@ body {
 .carouselJumbo{
     display: none;
     
-    justify-content: start;
+    justify-content: center;
     position: relative; 
 }
 
